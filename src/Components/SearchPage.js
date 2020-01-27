@@ -4,12 +4,8 @@ import Book from './Reusables/Book';
 import { Link } from 'react-router-dom';
 import Loader from './Reusables/Loader';
 
-
-
 class SearchPage extends React.Component {
-
-
-
+  
   state = {
     text: "",
     books: [],
@@ -31,7 +27,7 @@ class SearchPage extends React.Component {
     search(val).then(
       data => {
 
-        this.setState(prevState => ({ books: (data && !data.error) ? data : [], loading: false }))
+        this.setState({ books: (data && !data.error) ? data : [], loading: false })
       }
     )
 

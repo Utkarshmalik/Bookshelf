@@ -8,26 +8,44 @@ import {
 } from "react-router-dom";
 import SearchPage from './Components/SearchPage';
 import MainPage from './Components/MainPage';
-import { update, getAll, search } from './BooksAPI';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import { update, getAll, search, get } from './BooksAPI';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from './Components/Reusables/Loader';
 
 
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
 
-    books: []
-
+    /*
+    my State will contain the id's of all the books in the respective shleves 
+    */
+    loading: true,
+    books: { currentlyReading: [], wantToRead: [], read: [] }
   }
 
   componentDidMount() {
 
+    getAll().then(
+      data => {
+        console.log(data);
+
+        const shelf1 = data.filter((element) => {
+          return element.shelf === "currentlyReading";
+        })
+
+        const shelf2 = data.filter((element) => {
+          return element.shelf === "wantToRead";
+        })
+
+        const shelf3 = data.filter((element) => {
+          return element.shelf === "read";
+        })
+
+        this.setState({ books: { currentlyReading: shelf1, wantToRead: shelf2, read: shelf3 }, loading: false }, console.log(this.state))
+
+      }
+    )
   }
 
   updateBookShelf(book, shelf) {
@@ -35,13 +53,51 @@ class BooksApp extends React.Component {
     console.log(book);
     console.log(shelf)
 
-    update(book, shelf).then(
-      data => console.log(data)
-    )
+    console.log("frfr")
 
     update(book, shelf).then(
+      data => {
+        console.log(data)
+
+        const { currentlyReading, wantToRead, read } = data;
+
+        var shelf1 = []
+
+        
+        currentlyReading.forEach(element => {
+          get(element).then(
+            data => shelf1.push(data)
+          )
+        });
+
+        var shelf2 = []
+
+        wantToRead.forEach(element => {
+          get(element).then(
+            data => shelf2.push(data)
+          )
+        });
+
+        var shelf3 = []
+
+        read.forEach(element => {
+          get(element).then(
+            data => shelf3.push(data)
+          )
+        });
+
+        return { currentlyReading: shelf1, wantToRead: shelf2, read: shelf3 };
+      }
+    ).then(
+
+
       data => this.setState(state => ({ books: data }))
+
+      //data => console.log(data)
     )
+
+
+
   }
 
   render() {
@@ -49,21 +105,24 @@ class BooksApp extends React.Component {
 
       <BrowserRouter>
         <div className="app">
-
-          <Switch>
-            <Route exact path="/">
-              <MainPage books={this.state.books} />
+          {
+            (!this.state.loading) ? (
+              <Switch>
+                <Route exact path="/">
+                  <MainPage updateBookShelf={this.updateBookShelf.bind(this)} books={this.state.books} />
+                </Route>
+                <Route exact path="/search">
+                  <SearchPage books={this.state.books} />
+                </Route>
+                <Route path="/">
+                  page not found
             </Route>
-            <Route exact path="/search">
-              <SearchPage books={this.state.books} />
-            </Route>
-            <Route path="/">
-              page not found
-            </Route>
-          </Switch>
+              </Switch>
+            ) :
+              (<div> <Loader /> </div>)
 
 
-
+          }
         </div>
       </BrowserRouter>
 
