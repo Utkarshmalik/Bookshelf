@@ -2,6 +2,8 @@ import React from 'react';
 import { search } from '../BooksAPI';
 import Book from './Reusables/Book';
 import { Link } from 'react-router-dom';
+import Loader from './Reusables/Loader';
+
 
 
 class SearchPage extends React.Component {
@@ -10,21 +12,26 @@ class SearchPage extends React.Component {
 
   state = {
     text: "",
-    books: []
+    books: [],
+    loading: false
   }
+
+
 
   handleChange(e) {
 
     var val = e.target.value;
-    this.setState({ text: val, books: [] })
+    this.setState({ text: val, books: [], loading: true })
 
     if (val.length === 0) {
+      this.setState({ loading: false })
       return;
     }
 
     search(val).then(
       data => {
-        this.setState(prevState => ({ books: (data && !data.error) ? data : [] }))
+
+        this.setState(prevState => ({ books: (data && !data.error) ? data : [], loading: false }))
       }
     )
 
@@ -34,7 +41,6 @@ class SearchPage extends React.Component {
 
   render() {
 
-
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -43,35 +49,34 @@ class SearchPage extends React.Component {
           </Link>
           <div className="search-books-input-wrapper">
             {
-              /*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-               */
             }
-
-
             <input value={this.state.text} type="text" onChange={this.handleChange.bind(this)} placeholder="Search by title or author" />
 
           </div>
-        </div>
-        <div className="search-books-results">
-          <ol className="books-grid">
-
-            {
-
-              this.state.books.map(element =>
-
-                <Book key={element.id} data={element} />
-              )}
 
 
-          </ol>
 
         </div>
+
+
+        {
+          (this.state.loading) ? (
+
+            <Loader />
+          ) :
+            (
+              <div className="search-books-results">
+                <ol className="books-grid">
+                  {
+                    this.state.books.map(element =>
+                      <Book key={element.id} data={element} />
+                    )}
+
+                </ol>
+
+              </div>
+            )
+        }
       </div>
     )
 

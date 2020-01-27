@@ -9,6 +9,8 @@ import {
 import SearchPage from './Components/SearchPage';
 import MainPage from './Components/MainPage';
 import { update, getAll, search } from './BooksAPI';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+
 
 
 class BooksApp extends React.Component {
