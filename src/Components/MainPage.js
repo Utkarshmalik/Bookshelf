@@ -11,10 +11,9 @@ class SearchPage extends React.Component {
 
     console.log(this.props);
 
-    const { currentlyReading, wantToRead, read } = this.props.books;
+    const { books } = this.props;
     const { updateBookShelf } = this.props;
 
-    console.log(currentlyReading);
 
     return (
       <div className="list-books">
@@ -30,7 +29,10 @@ class SearchPage extends React.Component {
               <div className="bookshelf-books">
                 <ol className="books-grid">
 
-                  {currentlyReading.map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
+                  {
+                    books.filter((element) =>
+                      element.shelf === "currentlyReading"
+                    ).map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
                   }
 
                 </ol>
@@ -40,7 +42,10 @@ class SearchPage extends React.Component {
               <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {wantToRead.map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
+                  {
+                    books.filter((element) =>
+                      element.shelf === "wantToRead"
+                    ).map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
                   }
                 </ol>
               </div>
@@ -49,7 +54,10 @@ class SearchPage extends React.Component {
               <h2 className="bookshelf-title">Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {read.map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
+                  {
+                    books.filter((element) =>
+                      element.shelf === "read"
+                    ).map(element => <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />)
                   }
                 </ol>
               </div>

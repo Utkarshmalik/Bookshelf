@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Loader from './Reusables/Loader';
 
 class SearchPage extends React.Component {
-  
+
   state = {
     text: "",
     books: [],
@@ -37,6 +37,8 @@ class SearchPage extends React.Component {
 
   render() {
 
+    const { updateBookShelf } = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -65,7 +67,7 @@ class SearchPage extends React.Component {
                 <ol className="books-grid">
                   {
                     this.state.books.map(element =>
-                      <Book key={element.id} data={element} />
+                      <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />
                     )}
 
                 </ol>
