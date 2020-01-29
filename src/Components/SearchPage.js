@@ -32,7 +32,6 @@ class SearchPage extends React.Component {
       return;
     }
 
-    console.log(map);
 
     search(val).then(
       data => {

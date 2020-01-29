@@ -1,22 +1,21 @@
 import React from 'react';
 import Loader from 'react-loader-spinner'
 
-class LoaderNew extends React.Component {
+const LoaderNew= () => {
 
-  render() {
-    return (
-      <div style={{ marginTop: "15%", marginLeft: "45vw" }}>
-        <Loader
-          type="Puff"
-          color="#00BFFF"
-          height={50}
-          width={50}
-          timeout={5000}
+  return (
+    <div style={{ marginTop: "15%", marginLeft: "45vw" }}>
+      <Loader
+        type="Puff"
+        color="#00BFFF"
+        height={50}
+        width={50}
+        timeout={5000}
 
-        />
-      </div>
-    );
-  }
+      />
+    </div>
+  );
+
 }
 
 export default LoaderNew
