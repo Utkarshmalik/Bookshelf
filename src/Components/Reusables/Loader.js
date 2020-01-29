@@ -5,12 +5,12 @@ class LoaderNew extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: "15%", marginLeft: "45%" }}>
+      <div style={{ marginTop: "15%", marginLeft: "45vw" }}>
         <Loader
           type="Puff"
           color="#00BFFF"
-          height={100}
-          width={100}
+          height={50}
+          width={50}
           timeout={5000}
 
         />
