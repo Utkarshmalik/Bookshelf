@@ -5,6 +5,7 @@ import {
   BrowserRouter,
   Switch,
   Route,
+  Router
 } from "react-router-dom";
 import SearchPage from './Components/SearchPage';
 import MainPage from './Components/MainPage';
@@ -38,7 +39,26 @@ class BooksApp extends React.Component {
 
   updateBookShelf(book, shelf) {
 
-    
+    //check if the element is present in main page or not
+
+
+    // if (shelf === "none")
+    //   return;
+
+    update(book, shelf);
+
+
+    if (book.shelf === undefined) {
+      book.shelf = shelf;
+      this.state.books.push(book);
+      console.log(this.state.books);
+      this.setState({ books: this.state.books }, console.log(this.state.books))
+      return;
+    }
+
+
+
+
     this.setState({
       books: this.state.books.map(
         (element) => {
@@ -54,28 +74,36 @@ class BooksApp extends React.Component {
   }
 
   render() {
+
     return (
 
       <BrowserRouter>
+
         <div className="app">
           {
             (!this.state.loading) ? (
-              <Switch>
+              <div>
                 <Route exact path="/">
                   <MainPage updateBookShelf={this.updateBookShelf.bind(this)} books={this.state.books} />
                 </Route>
-                <Route exact path="/search">
-                  <SearchPage updateBookShelf={this.updateBookShelf.bind(this)} books={this.state.books} />
-                </Route>
-                <Route path="/">
-                  page not found
-            </Route>
-              </Switch>
+                <Route exact path="/search" render={({ history }) => {
+                  return (
+                    <SearchPage updateBookShelf={(book, shelf) => {
+                      this.updateBookShelf(book, shelf)
+                      history.push('/');
+
+                    }} books={this.state.books} />)
+
+                }} />
+
+
+              </div>
             ) :
               (<div> <Loader /> </div>)
 
 
           }
+
         </div>
       </BrowserRouter>
 

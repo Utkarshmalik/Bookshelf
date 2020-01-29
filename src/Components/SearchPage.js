@@ -26,7 +26,7 @@ class SearchPage extends React.Component {
 
     search(val).then(
       data => {
-
+        console.log(data)
         this.setState({ books: (data && !data.error) ? data : [], loading: false })
       }
     )
@@ -37,12 +37,16 @@ class SearchPage extends React.Component {
 
   render() {
 
+    // console.log(this.props)
+
     const { updateBookShelf } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link to='/'>
+
+          <Link to='/'  >
+
             <button className="close-search">Close</button>
           </Link>
           <div className="search-books-input-wrapper">

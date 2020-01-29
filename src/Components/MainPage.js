@@ -5,15 +5,26 @@ import Book from './Reusables/Book';
 
 class SearchPage extends React.Component {
 
+  state = {
+    books: []
+  }
+
+  componentDidMount() {
+
+    this.setState({
+      books: this.props.books
+    })
+  }
+
 
 
   render() {
 
+    console.log("rendering")
     console.log(this.props);
-
     const { books } = this.props;
     const { updateBookShelf } = this.props;
-
+    console.log(books)
 
     return (
       <div className="list-books">

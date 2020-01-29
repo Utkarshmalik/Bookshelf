@@ -30,7 +30,6 @@ class Book extends React.Component {
     const { title } = this.props.data;
 
     const author = (this.props.data.authors) ? this.props.data.authors[0] : "";
-    //const imageLinks = (this.props.data.imageLinks) ? `uril("${this.props.data.imageLinks.thumbnail}")` : "";
 
 
 
@@ -43,7 +42,7 @@ class Book extends React.Component {
                 width: 128, height: 193, backgroundImage: (this.props.data.imageLinks) ? `url("${this.props.data.imageLinks.thumbnail}")` : ""
               }}></div>
               <div className="book-shelf-changer">
-                <select value={this.state.shelf} onChange={this.handleChange.bind(this)} >
+                <select value={this.state.shelf || "none"} onChange={this.handleChange.bind(this)} >
                   <option value="move" disabled>Move to...</option>
                   <option value="currentlyReading">Currently Reading</option>
                   <option value="wantToRead">Want to Read</option>
