@@ -4,25 +4,39 @@ import Book from './Reusables/Book';
 import { Link } from 'react-router-dom';
 import Loader from './Reusables/Loader';
 
+const map = {}
+
 class SearchPage extends React.Component {
+
 
   state = {
     text: "",
     books: [],
-    loading: false
+    loading: false,
+  }
+
+  componentDidMount() {
+    this.props.books.forEach((element) => {
+      map[element.id] = element.shelf;
+    })
   }
 
   handleChange(e) {
     var val = e.target.value;
     this.setState({ text: val, books: [], loading: true })
 
+
+
     if (val.length === 0) {
       this.setState({ loading: false })
       return;
     }
 
+    console.log(map);
+
     search(val).then(
       data => {
+
         this.setState({ books: (data && !data.error) ? data : [], loading: false })
       }
     )
@@ -54,8 +68,16 @@ class SearchPage extends React.Component {
               <div className="search-books-results">
                 <ol className="books-grid">
                   {
-                    this.state.books.map(element =>
-                      <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />
+                    this.state.books.map(element => {
+
+                      if (map[element.id] !== undefined) {
+                        element.shelf = map[element.id]
+                      }
+
+                      return <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />;
+
+                    }
+
                     )}
                 </ol>
               </div>)

@@ -21,7 +21,7 @@ class Book extends React.Component {
 
   render() {
     const { title } = this.props.data;
-    const author = (this.props.data.authors) ? this.props.data.authors[0] : "";
+    const author = (this.props.data.authors) ? this.props.data.authors : [];
     return (
       <div>
         <li>
@@ -41,7 +41,13 @@ class Book extends React.Component {
               </div>
             </div>
             <div className="book-title">{title}</div>
-            <div className="book-authors">{author}</div>
+            <div className="book-authors">{
+
+              author.map((element) => {
+                return element;
+              })
+
+            }</div>
           </div>
         </li>
       </div>
