@@ -12,10 +12,7 @@ class SearchPage extends React.Component {
     loading: false
   }
 
-
-
   handleChange(e) {
-
     var val = e.target.value;
     this.setState({ text: val, books: [], loading: true })
 
@@ -26,18 +23,14 @@ class SearchPage extends React.Component {
 
     search(val).then(
       data => {
-        console.log(data)
         this.setState({ books: (data && !data.error) ? data : [], loading: false })
       }
     )
-
   }
 
 
 
   render() {
-
-    // console.log(this.props)
 
     const { updateBookShelf } = this.props;
 
@@ -53,37 +46,23 @@ class SearchPage extends React.Component {
             {
             }
             <input value={this.state.text} type="text" onChange={this.handleChange.bind(this)} placeholder="Search by title or author" />
-
           </div>
-
-
-
         </div>
-
-
         {
           (this.state.loading) ? (
-
-            <Loader />
-          ) :
-            (
+            <Loader />) : (
               <div className="search-books-results">
                 <ol className="books-grid">
                   {
                     this.state.books.map(element =>
                       <Book key={element.id} data={element} updateBookShelf={updateBookShelf} />
                     )}
-
                 </ol>
-
-              </div>
-            )
+              </div>)
         }
       </div>
     )
-
   }
-
 }
 
 

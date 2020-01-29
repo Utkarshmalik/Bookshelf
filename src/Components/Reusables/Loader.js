@@ -5,7 +5,7 @@ class LoaderNew extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: "auto", marginTop: "15%", marginLeft: "40%" }}>
+      <div style={{ marginTop: "15%", marginLeft: "45%" }}>
         <Loader
           type="Puff"
           color="#00BFFF"

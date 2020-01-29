@@ -1,5 +1,4 @@
 import React from 'react';
-import { update } from '../../BooksAPI';
 
 
 class Book extends React.Component {
@@ -9,13 +8,9 @@ class Book extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value);
-    //update the book with this id
     this.setState({ shelf: e.target.value })
-    console.log(this.props.updateBookShelf);
     this.props.updateBookShelf(this.props.data, e.target.value);
   }
-
 
   componentDidMount() {
     this.setState({
@@ -25,14 +20,8 @@ class Book extends React.Component {
 
 
   render() {
-
-    console.log(this.props)
     const { title } = this.props.data;
-
     const author = (this.props.data.authors) ? this.props.data.authors[0] : "";
-
-
-
     return (
       <div>
         <li>
