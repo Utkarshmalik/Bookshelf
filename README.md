@@ -1,6 +1,7 @@
 # Bookshelf
 
-This is a mobile application (Android or iOS - or both) that allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.  
+This is a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library that you will use to persist information as you interact with the application.
+
 
 ## Link
 https://my-personal-book-shelf.herokuapp.com/
